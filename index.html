@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#102c25">
+  <title>LitBuy spreadsheet | Product Finds, QC &amp; Shipping Checklist</title>
+  <meta name="description" content="Browse shoes, hoodies, tees and jackets from HipobuyFind. Use the LitBuy spreadsheet template to track source links, QC photos and estimated shipping costs.">
+  <!-- Search review: litbuy.works covers the order workflow, litbuyex.com emphasizes catalog discovery, and rep.tools/guides/litbuy-spreadsheet covers link conversion. This page adds a downloadable tracker, a source-link checklist, and a landed-cost worksheet alongside catalog listings. Search positions vary by location and date. -->
+  <!-- Indexing status: submission pending. Save as index.html and publish at the final HTTPS URL. Set the canonical to that URL, add it to the site's XML sitemap, then submit the sitemap in Google Search Console and Bing Webmaster Tools. Request URL indexing in each verified property. -->
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #f4f5ed;
+      --surface: #fffef9;
+      --ink: #152b23;
+      --muted: #52645b;
+      --line: #d5ded4;
+      --green: #194739;
+      --deep: #102c25;
+      --lime: #ddf49a;
+      font-family: "DM Sans", system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: var(--background); color: var(--ink); }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 3px solid #568334; outline-offset: 4px; }
+    [hidden] { display: none !important; }
+    .wrap { width: min(1100px, calc(100% - 2rem)); margin-inline: auto; }
+    .top { background: var(--deep); color: white; border-bottom: 1px solid #37564a; }
+    .top .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem 1.5rem; padding-block: .9rem; }
+    .brand { font-weight: 800; }
+    nav { display: flex; flex-wrap: wrap; gap: .4rem 1.3rem; }
+    nav a { text-decoration-thickness: 1px; text-underline-offset: .25em; }
+    .hero {
+      background: radial-gradient(ellipse at 75% 0%, #38604f, transparent 65%), var(--deep);
+      color: #fff;
+      text-align: center;
+      padding-block: clamp(3.4rem, 8vw, 7rem);
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1, h2 { font-family: "Instrument Serif", Georgia, serif; font-weight: 500; line-height: 1.05; }
+    h1 { font-size: clamp(2.85rem, 8vw, 6.65rem); letter-spacing: -.055em; }
+    h2 { font-size: clamp(2rem, 5vw, 3.55rem); letter-spacing: -.038em; }
+    h3 { font-size: 1.08rem; line-height: 1.35; }
+    .hero p { color: #edf5eb; max-width: 58ch; margin: 1.15rem auto 1.6rem; }
+    .actions, .filters { display: flex; flex-wrap: wrap; gap: .65rem; }
+    .actions { justify-content: center; }
+    .button, .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      min-height: 44px;
+      padding: .58rem 1.08rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .primary { background: var(--lime); color: var(--deep); }
+    .secondary { border-color: #c4d6c9; color: white; }
+    .primary:hover { background: #eafbbd; }
+    .secondary:hover { background: #ffffff20; }
+    main { padding-block: clamp(2.2rem, 6vw, 5rem); }
+    section + section { margin-top: clamp(2.5rem, 7vw, 5rem); }
+    .intro { margin-top: .75rem; max-width: 72ch; color: var(--muted); }
+    .catalog-tools { margin: 1.3rem 0 .65rem; display: grid; gap: .65rem; }
+    label { font-weight: 700; }
+    input { width: 100%; max-width: 31rem; min-height: 44px; padding: .55rem .75rem; border: 1px solid #8a9b90; border-radius: .65rem; background: var(--surface); color: var(--ink); }
+    .chip { background: var(--surface); border-color: var(--line); color: var(--ink); }
+    .chip[aria-pressed="true"], .download { background: var(--green); color: white; }
+    .status { min-height: 1.7em; margin: .5rem 0; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 1rem; }
+    .card, .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem; }
+    .card { display: flex; flex-direction: column; gap: .55rem; }
+    .card .category { color: var(--muted); font-size: .9rem; }
+    .card .price { font-size: 1.25rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .card a { margin-top: auto; color: var(--green); font-weight: 750; text-underline-offset: .23em; }
+    .panel { margin-top: 1.1rem; }
+    .panel ol { margin: 0; padding-left: 1.35rem; }
+    .panel li + li { margin-top: .65rem; }
+    .panel p + p, .panel .download { margin-top: .85rem; }
+    .cost { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 155px), 1fr)); gap: .75rem; margin: 1rem 0; }
+    .cost label { display: grid; gap: .3rem; font-size: .93rem; }
+    output { display: block; font-weight: 800; font-size: 1.2rem; }
+    details { border-bottom: 1px solid var(--line); padding: .9rem 0; }
+    details:first-of-type { margin-top: .8rem; }
+    summary { cursor: pointer; font-weight: 750; }
+    details p { margin-top: .6rem; max-width: 75ch; color: var(--muted); }
+    footer { padding-block: 1.25rem; background: var(--deep); color: #edf5eb; font-size: .9rem; }
+    footer a { text-underline-offset: .25em; }
+  </style>
+<link rel="canonical" href="https://kakobuyfinds.github.io/hjqor/">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <span class="brand">LitBuy spreadsheet</span>
+      <nav aria-label="Page sections">
+        <a href="#catalog">Catalog</a>
+        <a href="#tracker">Order tracker</a>
+        <a href="#cost">Cost estimate</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>LitBuy spreadsheet</h1>
+      <p>Find shoes and clothing in the HipobuyFind catalog, then track source links, size selections, QC photos and shipping estimates in one sheet.</p>
+      <div class="actions">
+        <a class="button primary" href="https://hipobuyfind.com">LitBuy spreadsheet</a>
+        <a class="button secondary" href="https://hipobuyfind.com">Buy it now</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section id="catalog" aria-labelledby="catalog-title">
+      <h2 id="catalog-title">Browse the product catalog</h2>
+      <p class="intro">Listings and reference prices come from HipobuyFind. Open the listing to confirm its current price, stock and available sizes. USD figures are approximate and exclude shipping and fees.</p>
+      <!-- Catalog source: https://hipobuyfind.com/ -->
+      <div class="catalog-tools" id="catalog-tools" hidden>
+        <label for="product-search">Search by item name or ID</label>
+        <input id="product-search" type="search" placeholder="Try fleece or 149969">
+        <div class="filters" role="group" aria-label="Filter by category">
+          <button class="chip" type="button" data-category="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-category="shoes" aria-pressed="false">Shoes</button>
+          <button class="chip" type="button" data-category="hoodies" aria-pressed="false">Hoodies</button>
+          <button class="chip" type="button" data-category="tees" aria-pressed="false">T-shirts</button>
+          <button class="chip" type="button" data-category="jackets" aria-pressed="false">Jackets</button>
+        </div>
+      </div>
+      <p class="status" id="catalog-status" role="status" hidden></p>
+
+      <div class="grid" id="products">
+        <article class="card" data-category="shoes">
+          <span class="category">Shoes · Item 149969</span>
+          <h3>Black and Red Basketball Sneakers</h3>
+          <p class="price">≈ $20.14 <small>· ¥145.00</small></p>
+          <a href="https://hipobuyfind.com/goods-149969.html">View basketball sneakers</a>
+        </article>
+        <article class="card" data-category="hoodies">
+          <span class="category">Hoodies · Item 154917</span>
+          <h3>Fleece-Lined Hoodie</h3>
+          <p class="price">≈ $23.61 <small>· ¥170.00</small></p>
+          <a href="https://hipobuyfind.com/goods-154917.html">View fleece-lined hoodie</a>
+        </article>
+        <article class="card" data-category="tees">
+          <span class="category">T-shirts · Item 154919</span>
+          <h3>Short-Sleeve T-Shirt</h3>
+          <p class="price">≈ $14.58 <small>· ¥105.00</small></p>
+          <a href="https://hipobuyfind.com/goods-154919.html">View short-sleeve T-shirt</a>
+        </article>
+        <article class="card" data-category="jackets">
+          <span class="category">Jackets · Item 154851</span>
+          <h3>Hooded Quick-Dry Jacket</h3>
+          <p class="price">≈ $21.83 <small>· ¥157.14</small></p>
+          <a href="https://hipobuyfind.com/goods-154851.html">View quick-dry jacket</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="tracker" aria-labelledby="tracker-title">
+      <h2 id="tracker-title">How to use the LitBuy spreadsheet</h2>
+      <p class="intro">Use one row per size or color you plan to order. Keep the catalog URL and the original seller URL in separate columns so you can retrace the listing if a link changes.</p>
+      <div class="panel">
+        <ol>
+          <li><strong>Save the source.</strong> Copy the catalog URL and, if the detail page provides one, the original seller URL. Record the product ID, variant, seller price and date checked.</li>
+          <li><strong>Check the variant.</strong> Compare the seller’s measurements with something you already own. Record the chosen size and color before entering the seller link in your agent’s order form.</li>
+          <li><strong>Review QC photos.</strong> If warehouse photos are available, compare the item label, color, measurements and visible condition against your order. Record what you approved or what needs a closer photo.</li>
+          <li><strong>Record shipping separately.</strong> Save the parcel weight, shipping quote and tracking number when available. Update the spreadsheet with the amount you actually paid.</li>
+        </ol>
+        <a class="button download" download="litbuy-spreadsheet.csv" href="data:text/csv;charset=utf-8,Item%20ID%2CProduct%2CCatalog%20URL%2CSeller%20URL%2CSize%2CColor%2CPrice%20CNY%2CDate%20checked%2CQC%20photo%20URL%2CQC%20notes%2CParcel%20weight%2CShipping%20quote%2CCurrency%2CTracking%20number%2CStatus%0D%0A">Download the CSV template</a>
+      </div>
+    </section>
+
+    <section id="cost" aria-labelledby="cost-title">
+      <h2 id="cost-title">Estimate your total in USD</h2>
+      <p class="intro">Convert any CNY amounts to USD before entering them. Use the shipping quote for your own parcel and destination.</p>
+      <div class="panel">
+        <p><strong>Estimated total = items + domestic shipping + service fees + international shipping + taxes or duties.</strong></p>
+        <div class="cost" id="cost-fields" hidden>
+          <label>Items ($)<input type="number" min="0" step="0.01" inputmode="decimal"></label>
+          <label>Domestic shipping ($)<input type="number" min="0" step="0.01" inputmode="decimal"></label>
+          <label>Service fees ($)<input type="number" min="0" step="0.01" inputmode="decimal"></label>
+          <label>International shipping ($)<input type="number" min="0" step="0.01" inputmode="decimal"></label>
+          <label>Taxes or duties ($)<input type="number" min="0" step="0.01" inputmode="decimal"></label>
+        </div>
+        <output id="cost-total" aria-live="polite" hidden>Estimated total $0.00</output>
+      </div>
+    </section>
+
+    <section id="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Frequently asked questions</h2>
+      <details>
+        <summary>What is a LitBuy spreadsheet?</summary>
+        <p>It is a way to organize product finds and buying-agent orders. This page pairs a HipobuyFind catalog selection with a CSV you can open in Google Sheets, Excel or another spreadsheet app.</p>
+      </details>
+      <details>
+        <summary>Where do the two shopping buttons go?</summary>
+        <p>Both buttons open the HipobuyFind homepage. Individual product links open HipobuyFind listing pages, where you can look for the original seller link.</p>
+      </details>
+      <details>
+        <summary>What should I do if a source link fails?</summary>
+        <p>Open the HipobuyFind listing and check whether the seller URL has changed. Search the catalog by item name or ID if the detail page has moved. Confirm the seller, product and variant before using a replacement link.</p>
+      </details>
+      <details>
+        <summary>What should I record if QC photos are unavailable?</summary>
+        <p>Mark the QC status as pending or unavailable and record which details you still need to confirm, such as the size tag, insole length or a close-up of a seam.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Independent shopping guide. Catalog listings provided by <a href="https://hipobuyfind.com">HipobuyFind</a>.</div>
+  </footer>
+
+  <script>
+    const catalogTools = document.getElementById('catalog-tools');
+    const search = document.getElementById('product-search');
+    const status = document.getElementById('catalog-status');
+    const filters = Array.from(catalogTools.querySelectorAll('button[data-category]'));
+    const products = Array.from(document.querySelectorAll('#products article'), element => ({
+      element,
+      category: element.dataset.category,
+      text: element.textContent.toLowerCase()
+    }));
+    let selectedCategory = 'all';
+
+    function updateCatalog() {
+      const query = search.value.trim().toLowerCase();
+      let count = 0;
+      for (const product of products) {
+        const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+        const matches = matchesCategory && product.text.includes(query);
+        product.element.hidden = !matches;
+        count += Number(matches);
+      }
+      status.textContent = count
+        ? `${count} ${count === 1 ? 'listing' : 'listings'}`
+        : 'No listings match. Try another search or category.';
+    }
+
+    search.addEventListener('input', updateCatalog);
+    for (const button of filters) {
+      button.addEventListener('click', () => {
+        selectedCategory = button.dataset.category;
+        for (const filter of filters) {
+          filter.setAttribute('aria-pressed', String(filter === button));
+        }
+        updateCatalog();
+      });
+    }
+    catalogTools.hidden = false;
+    status.hidden = false;
+    updateCatalog();
+
+    const costFields = document.getElementById('cost-fields');
+    const costTotal = document.getElementById('cost-total');
+    const amounts = Array.from(costFields.querySelectorAll('input'));
+    const formatUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+    function updateCost() {
+      let cents = 0;
+      for (const input of amounts) {
+        if (!input.validity.valid) {
+          costTotal.textContent = 'Enter nonnegative USD amounts with up to two decimal places.';
+          return;
+        }
+        if (Number.isFinite(input.valueAsNumber)) {
+          cents += Math.round(input.valueAsNumber * 100);
+        }
+      }
+      costTotal.textContent = `Estimated total ${formatUSD.format(cents / 100)}`;
+    }
+
+    costFields.addEventListener('input', updateCost);
+    costFields.hidden = false;
+    costTotal.hidden = false;
+    updateCost();
+  </script>
+</body>
+</html>
